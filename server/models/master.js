@@ -1,7 +1,5 @@
 /* * @Description:    */
-const {
-  DataTypes
-} = require('sequelize')
+const { DataTypes } = require('sequelize')
 const sequelize = require('./db')
 sequelize.sync({ force: true }) // 生产环境禁用，会清空数据库
 
@@ -36,9 +34,5 @@ const attributes = {
     type: DataTypes.STRING,
   }
 }
-const options = {
-  tableName: 'master',
-  comment: ''
-}
 
-module.exports = sequelize.define('Master', attributes, options)
+module.exports = sequelize.define('master', attributes)

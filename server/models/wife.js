@@ -12,7 +12,7 @@ const attributes = {
     autoIncrement: true,
     allowNull: false
   },
-  givenName: {
+  fullName: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -33,9 +33,5 @@ const attributes = {
     type: DataTypes.STRING,
   }
 }
-const options = {
-  tableName: 'daughters',
-  comment: ''
-}
 
-module.exports = sequelize.define('daughters', attributes, options)
+module.exports = sequelize.define('wife', attributes)

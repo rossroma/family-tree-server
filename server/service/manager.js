@@ -1,18 +1,18 @@
 const Master = require('../models/master')
-const Wives = require('../models/wives')
-const Daughters = require('../models/daughters')
+const Wife = require('../models/wife')
+const Daughter = require('../models/daughter')
 
-Master.hasMany(Wives, { foreignKey: 'husbandId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-Master.hasMany(Daughters, { foreignKey: 'fatherId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-Wives.belongsTo(Master)
-Daughters.belongsTo(Master)
+Master.hasMany(Wife, { foreignKey: 'husbandId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+Master.hasMany(Daughter, { foreignKey: 'fatherId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+Wife.belongsTo(Master, { foreignKey: 'husbandId' })
+Daughter.belongsTo(Master, { foreignKey: 'fatherId' })
 
 // 创建
 const create = async (data) => {
   return await Master.create(
     data,
     {
-      include: [Wives, Daughters]
+      include: [Wife, Daughter]
     }
   )
 }
@@ -26,10 +26,10 @@ const getList = async (query) => {
 const detail = async (query) => {
   return await Master.findOne({
     where: query,
-    include: [Wives, Daughters],
+    include: [Wife, Daughter],
     order: [
-      [Wives, 'sort', 'ASC'],
-      [Daughters, 'sort', 'ASC']
+      [Wife, 'sort', 'ASC'],
+      [Daughter, 'sort', 'ASC']
     ]
   })
 }
@@ -43,6 +43,7 @@ const remove = async (data) => {
 
 // 更新
 const update = async (id, data) => {
+  console.log('🙆‍♂️🙆🙆‍♀️ ~ file: manager.js ~ line 46 ~ update ~ data', data)
   updateDaughtersAndWives(id, data)
   return await Master.update(data, {
     where: { id }
@@ -53,13 +54,13 @@ const updateDaughtersAndWives = async (id, data) => {
   const master = await detail({id})
   // 更新妻子信息
   assocsUpdate(master.wives, data.wives, wife => {
-    Wives.create(wife).then(wifeInstance => {
+    Wife.create(wife).then(wifeInstance => {
       master.addWife(wifeInstance)
     })
   })
   // 更新女儿信息
   assocsUpdate(master.daughters, data.daughters, daughter => {
-    Daughters.create(daughter).then(daughterInstance => {
+    Daughter.create(daughter).then(daughterInstance => {
       master.addDaughter(daughterInstance)
     })
   })
