@@ -6,6 +6,11 @@ module.exports = {
     username: 'root',
     password: '123456789',
     database: 'family_tree',
-    timezone: '+08:00'
+    dialectOptions: {
+      useUTC: false, //for reading from database
+      dateStrings: true,
+      typeCast: true
+    },
+    timezone: '+08:00' //for writing to database
   }
 }
