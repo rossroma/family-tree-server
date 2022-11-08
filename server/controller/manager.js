@@ -55,10 +55,10 @@ exports.updateItem = (req, res) => {
     .then((query) => {
       const format = {
         ...query,
-        id: undefined,
         wives: query.wives.map((item, sort) => ({ ...item, sort})),
         daughters: query.daughters.map((item, sort) => ({ ...item, sort}))
       }
+      delete format.id
       return ManagerService.update(query.id, format)
     })
     .then(data => {
