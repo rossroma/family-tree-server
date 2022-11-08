@@ -15,7 +15,7 @@ const success = (res, options = {}, message) => {
   res.json({
     code: 1,
     msg: message || '操作成功',
-    result: options.get ? options.get({ plain: true }) : options
+    result: JSON.parse(JSON.stringify(options))
   })
 }
 
@@ -33,19 +33,7 @@ const fail = (res, options = {}, message) => {
   })
 }
 
-/**
- * 对比两个数组是否相等
- * @param {Array} arr1 数组1
- * @param {Array} arr2 数组2
- * @returns Boolean
- */
-const compareArray = (arr1 = [], arr2 = []) => {
-  if (arr1.length !== arr2.length) return false
-  return arr1.sort().toString() === arr2.sort().toString()
-}
-
 module.exports = {
   success,
-  fail,
-  compareArray
+  fail
 }
