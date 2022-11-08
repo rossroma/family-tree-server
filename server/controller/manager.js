@@ -53,9 +53,13 @@ exports.removeItem = (req, res) => {
 exports.updateItem = (req, res) => {
   validator(['id'], req.body)
     .then((query) => {
-      const id = query.id
-      delete query.id
-      return ManagerService.update(id, query)
+      const format = {
+        ...query,
+        id: undefined,
+        wives: query.wives.map((item, sort) => ({ ...item, sort})),
+        daughters: query.daughters.map((item, sort) => ({ ...item, sort}))
+      }
+      return ManagerService.update(query.id, format)
     })
     .then(data => {
       success(res, data)
