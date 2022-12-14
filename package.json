@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "model": "sequelize-automate -t js -h localhost -d xbb_front_tools_test -u root -p 123456789 -P 3306 -e mysql -o models -C",
-    "dev": "export NODE_ENV=development && node ./index.js"
+    "dev": "export NODE_ENV=development && nodemon ./index.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.6.2"
