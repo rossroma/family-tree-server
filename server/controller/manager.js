@@ -1,6 +1,7 @@
 const ManagerService = require('../service/manager')
 const { validator } = require('./validator')
 const { fail, success } = require('./utils')
+const { init } = require('../service/input')
 
 // 新增一条数据
 exports.createItem = (req, res) => {
@@ -72,17 +73,8 @@ exports.updateItem = (req, res) => {
 // 查看列表
 exports.getList = (req, res) => {
   validator(['pageSize'], req.body)
-    .then(({pageSize = 30, page = 1, generation, givenName}) => {
-      const format = {
-        offset: pageSize * (page -1),
-        limit: pageSize,
-        where: {
-          generation,
-          givenName
-        },
-        order: [['generation', 'ASC']]
-      }
-      return ManagerService.getList(JSON.parse(JSON.stringify(format)))
+    .then((params) => {
+      return ManagerService.getList(params)
     })
     .then(data => {
       success(res, data)
@@ -92,3 +84,18 @@ exports.getList = (req, res) => {
     })
 }
 
+// 查看列表
+exports.getTreeList = (req, res) => {
+  ManagerService.getTreeList()
+  .then(data => {
+    success(res, data)
+  })
+  .catch(err => {
+    fail(res, err)
+  })
+}
+
+// 初始化数据
+exports.initData = (req, res) => {
+  init()
+}

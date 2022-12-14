@@ -1,11 +1,29 @@
 const Master = require('../models/master')
 const Wife = require('../models/wife')
 const Daughter = require('../models/daughter')
+const { Op } = require("sequelize")
 
 Master.hasMany(Wife, { foreignKey: 'husbandId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-Master.hasMany(Daughter, { foreignKey: 'fatherId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
 Wife.belongsTo(Master, { foreignKey: 'husbandId' })
+Master.hasMany(Daughter, { foreignKey: 'fatherId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
 Daughter.belongsTo(Master, { foreignKey: 'fatherId' })
+Master.belongsTo(Master, { as: 'father', foreignKey: 'parentId', onDelete: 'RESTRICT', onUpdate: 'CASCADE' })
+
+const formatQuerys = ({ givenName, generation }) => {
+  const result = {}
+  if (givenName) {
+    result.givenName = { [Op.substring]: givenName }
+  }
+  if (generation) {
+    result.generation = generation
+  }
+  return result
+}
+
+const formatOrder = (order) => {
+  if (!order) return ['generation', 'ASC']
+  return [order[0], order[1].replace('ending', '').toUpperCase()]
+}
 
 // 创建
 const create = async (data) => {
@@ -18,15 +36,29 @@ const create = async (data) => {
 }
 
 // 列表
-const getList = async (query) => {
-  return await Master.findAndCountAll(query)
+const getList = async (options) => {
+  const { pageSize, page, givenName, generation, order } = options
+  return await Master.findAndCountAll({
+    offset: pageSize * (page -1),
+    limit: pageSize,
+    where: formatQuerys({ givenName, generation }),
+    include: [Wife, Daughter],
+    order: [
+      formatOrder(order),
+      [Wife, 'sort', 'ASC'],
+      [Daughter, 'sort', 'ASC']
+    ]
+  })
 }
 
 // 详情
 const detail = async (query) => {
   return await Master.findOne({
     where: query,
-    include: [Wife, Daughter],
+    include: [Wife, Daughter, {
+      model: Master,
+      as: 'father'
+    }],
     order: [
       [Wife, 'sort', 'ASC'],
       [Daughter, 'sort', 'ASC']
@@ -43,10 +75,17 @@ const remove = async (data) => {
 
 // 更新
 const update = async (id, data) => {
-  console.log('🙆‍♂️🙆🙆‍♀️ ~ file: manager.js ~ line 46 ~ update ~ data', data)
   updateDaughtersAndWives(id, data)
   return await Master.update(data, {
     where: { id }
+  })
+}
+
+const getTreeList = async () => {
+  return await Master.findAndCountAll({
+    order: [
+      [ 'id', 'ASC']
+    ]
   })
 }
 
@@ -71,11 +110,12 @@ const assocsUpdate = async (sourceInstances, targetInstances, cb) => {
   sourceInstances.forEach(source => {
     const isExist = targetInstances.find(target => target.id === source.id) 
     if (isExist) {
-      source.update(isExist)
+      source.update(isExist) // 存在相同id，执行更新操作
     } else {
-      source.destroy()
+      source.destroy() // 不存在相同id，执行删除操作
     }
   })
+  // 过滤出没有id的数据，执行新增操作
   targetInstances.filter(target => !target.id).forEach(cb)
 }
 
@@ -84,5 +124,6 @@ module.exports = {
   detail,
   create,
   remove,
-  update
+  update,
+  getTreeList
 }
