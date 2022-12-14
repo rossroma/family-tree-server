@@ -3,7 +3,7 @@ const {
   DataTypes
 } = require('sequelize')
 const sequelize = require('./db')
-sequelize.sync({ force: true }) // 生产环境禁用，会清空数据库
+// sequelize.sync({ force: true }) // 生产环境禁用，会清空数据库
 
 const attributes = {
   id: {
@@ -16,13 +16,7 @@ const attributes = {
     type: DataTypes.STRING,
     allowNull: false
   },
-  from: {
-    type: DataTypes.STRING,
-  },
-  birth: {
-    type: DataTypes.STRING,
-  },
-  death: {
+  married: {
     type: DataTypes.STRING,
   },
   sort: {

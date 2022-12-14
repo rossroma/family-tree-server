@@ -25,7 +25,6 @@ const success = (res, options = {}, message) => {
  * @param {*} options 要返回的额外数据
  */
 const fail = (res, options = {}, message) => {
-  console.log('🙆‍♂️🙆🙆‍♀️ ~ file: utils.js ~ line 28 ~ fail ~ options', options)
   res.json({
     code: 0,
     msg: message || '操作失败',

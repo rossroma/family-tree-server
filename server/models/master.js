@@ -1,7 +1,7 @@
 /* * @Description:    */
 const { DataTypes } = require('sequelize')
 const sequelize = require('./db')
-sequelize.sync({ force: true }) // 生产环境禁用，会清空数据库
+// sequelize.sync({ force: true }) // 生产环境禁用，会清空数据库
 
 const attributes = {
   id: {
@@ -14,20 +14,11 @@ const attributes = {
     type: DataTypes.STRING,
     allowNull: false
   },
-  courtesyName: {
-    type: DataTypes.STRING,
-  },
-  parentId: {
-    type: DataTypes.INTEGER
-  },
   generation: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  birth: {
-    type: DataTypes.STRING,
-  },
-  death: {
+  bad: {
     type: DataTypes.STRING,
   },
   memo: {
