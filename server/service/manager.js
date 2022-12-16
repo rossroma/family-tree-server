@@ -42,7 +42,10 @@ const getList = async (options) => {
     offset: pageSize * (page -1),
     limit: pageSize,
     where: formatQuerys({ givenName, generation }),
-    include: [Wife, Daughter],
+    include: [
+      { model: Daughter, required: true },
+      { model: Wife, required: true }
+    ],
     order: [
       formatOrder(order),
       [Wife, 'sort', 'ASC'],
@@ -81,6 +84,7 @@ const update = async (id, data) => {
   })
 }
 
+// 获取树列表
 const getTreeList = async () => {
   return await Master.findAndCountAll({
     order: [

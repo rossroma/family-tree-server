@@ -84,7 +84,7 @@ exports.getList = (req, res) => {
     })
 }
 
-// 查看列表
+// 查看树列表
 exports.getTreeList = (req, res) => {
   ManagerService.getTreeList()
   .then(data => {
