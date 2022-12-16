@@ -7,6 +7,7 @@ module.exports = router => {
   router.post('/item/get', Manager.getItem)
   router.post('/item/remove', Manager.removeItem)
   router.post('/item/update', Manager.updateItem)
+  router.post('/initData', Manager.initData)
 
   return router
 }
