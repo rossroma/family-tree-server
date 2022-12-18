@@ -1,7 +1,6 @@
 const ManagerService = require('../service/manager')
 const { validator } = require('./validator')
 const { fail, success } = require('./utils')
-const { init } = require('../service/input')
 
 // 新增一条数据
 exports.createItem = (req, res) => {
@@ -93,9 +92,4 @@ exports.getTreeList = (req, res) => {
   .catch(err => {
     fail(res, err)
   })
-}
-
-// 初始化数据
-exports.initData = (req, res) => {
-  init()
 }

@@ -21,7 +21,7 @@ const formatQuerys = ({ givenName, generation }) => {
 }
 
 const formatOrder = (order) => {
-  if (!order) return ['generation', 'ASC']
+  if (!order) return ['updatedAt', 'DESC']
   return [order[0], order[1].replace('ending', '').toUpperCase()]
 }
 
@@ -43,8 +43,8 @@ const getList = async (options) => {
     limit: pageSize,
     where: formatQuerys({ givenName, generation }),
     include: [
-      { model: Daughter, required: true },
-      { model: Wife, required: true }
+      { model: Daughter },
+      { model: Wife }
     ],
     order: [
       formatOrder(order),

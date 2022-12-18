@@ -27,7 +27,7 @@ const success = (res, options = {}, message) => {
 const fail = (res, options = {}, message) => {
   res.json({
     code: 0,
-    msg: message || '操作失败',
+    msg: message || options.message || '操作失败',
     ...options
   })
 }
