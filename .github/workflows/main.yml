@@ -2,14 +2,14 @@ name: release
 
 on:
   push:
-    branches: master # master 分支提交时触发
+    branches: main # main 分支提交时触发
 
 jobs:
   build:
     runs-on: ubuntu-latest # 运行环境
     steps:
       - name: 签出代码
-        uses: actions/checkout@master
+        uses: actions/checkout@main
       - name: 安装 nodejs
         uses: actions/setup-node@v2
         with:
