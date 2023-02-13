@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: deploy file to server
-        uses: wlixcc/SFTP-Deploy-Action@v1.0 # 使用 SFTP 协议上传到服务器
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4 # 使用 SFTP 协议上传到服务器
         with:
           username: 'root'
           server: '${{ secrets.SERVER_HOST }}'

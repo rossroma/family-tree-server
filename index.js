@@ -11,5 +11,5 @@ server.use('/', router(express.Router()))
 server.use(express.static('./dist'))
 
 server.listen(8000, () => {
-  console.log('http://127.0.0.1:80 启动')
+  console.log('http://127.0.0.1:8000 启动')
 })
