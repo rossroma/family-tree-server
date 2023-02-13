@@ -5,22 +5,14 @@ on:
     branches: main # main 分支提交时触发
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest # 运行环境
     steps:
       - name: Checkout
         uses: actions/checkout@main
 
-      - name: Use Nodejs
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-
-      - name: Install Dependencies
-        run: npm install
-
       - name: deploy file to server
-        uses: wlixcc/SFTP-Deploy-Action@v1.0 # 使用 SFTP 协议上传到腾讯云
+        uses: wlixcc/SFTP-Deploy-Action@v1.0 # 使用 SFTP 协议上传到服务器
         with:
           username: 'root'
           server: '${{ secrets.SERVER_HOST }}'
