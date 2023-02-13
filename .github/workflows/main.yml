@@ -8,20 +8,23 @@ jobs:
   build:
     runs-on: ubuntu-latest # 运行环境
     steps:
-      - name: 签出代码
+      - name: Checkout
         uses: actions/checkout@main
-      - name: 安装 nodejs
+
+      - name: Use Nodejs
         uses: actions/setup-node@v2
         with:
           node-version: "14"
-      - name: 安装依赖
+
+      - name: Install Dependencies
         run: npm install
-      - name: 发布腾讯云
+
+      - name: deploy file to server
         uses: wlixcc/SFTP-Deploy-Action@v1.0 # 使用 SFTP 协议上传到腾讯云
         with:
           username: 'root'
           server: '${{ secrets.SERVER_HOST }}'
           ssh_private_key: '${{ secrets.ACCESS_TOKEN }}'
-          local_path: 'dist/*'
-          remote_path: '/home/'
+          local_path: './*'
+          remote_path: '/home/webroot/family-tree-server/'
           args: "-o ConnectTimeout=5"
