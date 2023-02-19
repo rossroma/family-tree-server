@@ -1,12 +1,13 @@
 const { validator } = require('./validator')
-const { fail, success } = require('./utils')
+const { fail, success, sign } = require('./utils')
 
 // 登录
 exports.login = (req, res) => {
   validator(['username', 'password'], req.body)
     .then((query) => {
       if (query.password === '15033691840') {
-        return { toekn: Date.now() }
+        const token = sign({ user: query.password })
+        return { token }
       }
       throw new Error('账号或密码错误')
     })
