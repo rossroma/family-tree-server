@@ -11,14 +11,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+
+      - name: Replace Password
         run: sed -i "s/123456/${{ secrets.LOGIN_PASSWORD }}/g" server/controller/user.js
 
-      - name: deploy file to server
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4 # 使用 SFTP 协议上传到服务器
-        with:
-          username: 'root'
-          server: '${{ secrets.SERVER_HOST }}'
-          ssh_private_key: '${{ secrets.ACCESS_TOKEN }}'
-          local_path: './*'
-          remote_path: '/home/webroot/family-tree-server/'
-          args: "-o ConnectTimeout=5"
