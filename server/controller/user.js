@@ -6,7 +6,7 @@ exports.login = (req, res) => {
   validator(['username', 'password'], req.body)
     .then((query) => {
       // 请自行替换登录密码，获奖密码存入数据库
-      if (query.password === 123456) {
+      if (query.password === '123456') {
         const token = sign({ user: query.password })
         return { token }
       }
