@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+        
+      - name: Replace Password
         run: sed -i "s/123456/${{ secrets.LOGIN_PASSWORD }}/g" server/controller/user.js
 
       - name: deploy file to server
