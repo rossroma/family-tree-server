@@ -5,7 +5,8 @@ const { fail, success, sign } = require('./utils')
 exports.login = (req, res) => {
   validator(['username', 'password'], req.body)
     .then((query) => {
-      if (query.password === '15033691840') {
+      // 偷懒了，没存数据库，通过环境变量来判断
+      if (query.password === process.env.LOGIN_PASSWORD) {
         const token = sign({ user: query.password })
         return { token }
       }

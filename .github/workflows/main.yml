@@ -7,6 +7,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest # 运行环境
+    env:
+      LOGIN_PASSWORD: ${{ secrets.LOGIN_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@main
