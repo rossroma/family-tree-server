@@ -7,11 +7,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest # 运行环境
-    env:
-      LOGIN_PASSWORD: ${{ secrets.LOGIN_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@main
+        run: sed -i "s/123456/${{ secrets.LOGIN_PASSWORD }}/g" server/controller/user.js
 
       - name: deploy file to server
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4 # 使用 SFTP 协议上传到服务器
