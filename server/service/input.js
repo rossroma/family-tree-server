@@ -76,11 +76,13 @@ const enterData = async (arr, pid = null) => {
   }
 }
 
-function init () {
+function init (req, res) {
   enterData(arrayToTree(book)).then(res => {
     console.log('res')
+    res.send('ok')
   }).catch(err => {
     console.log('err', err)
+    res.send('err')
   })
 }
 

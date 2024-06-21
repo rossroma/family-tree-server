@@ -5,7 +5,7 @@
  * @LastEditTime: 2021-10-13 16:25:01
  * @Description: 参数格式化方法
  */
-const jwt = require('jsonwebtoken')
+
 
 /**
  * 成功回调
@@ -33,19 +33,7 @@ const fail = (res, options = {}) => {
   })
 }
 
-/**
- * 
- * @param {*} jtJson 
- * @param {*} options 
- * @returns 
- */
-const sign = (jtJson = {}, options = {}) => {
-  const token = jwt.sign({ iss: 'lesscode', ...jtJson}, "secret", { expiresIn: 60 * 60 * 24 * 10, ...options})
-  return token
-}
-
 module.exports = {
   success,
-  fail,
-  sign
+  fail
 }

@@ -2,6 +2,7 @@ const Master = require('../models/master')
 const Wife = require('../models/wife')
 const Daughter = require('../models/daughter')
 const { Op } = require("sequelize")
+const { formatOrder } = require('./utils')
 
 Master.hasMany(Wife, { foreignKey: 'husbandId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
 Wife.belongsTo(Master, { foreignKey: 'husbandId' })
@@ -20,10 +21,6 @@ const formatQuerys = ({ givenName, generation }) => {
   return result
 }
 
-const formatOrder = (order) => {
-  if (!order) return ['updatedAt', 'DESC']
-  return [order[0], order[1].replace('ending', '').toUpperCase()]
-}
 
 // 创建
 const create = async (data) => {

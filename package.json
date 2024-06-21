@@ -2,12 +2,13 @@
   "name": "family-tree-server",
   "version": "1.0.0",
   "scripts": {
-    "model": "sequelize-automate -t js -h localhost -d xbb_front_tools_test -u root -p 123456789 -P 3306 -e mysql -o models -C",
+    "model": "sequelize-automate -t js -h localhost -d family_tree -u root -p 123456789 -P 3306 -e mysql -o models -C",
     "dev": "export NODE_ENV=development && nodemon ./index.js",
     "prod": "export NODE_ENV=default && nodemon ./index.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^9.0.0",
